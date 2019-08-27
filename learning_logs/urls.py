@@ -19,6 +19,9 @@ urlpatterns = [
     # path for adding new entry
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
     # path for editing entry
-    path('del_entry/<int:entry_id>/', views.del_entry, name='del_entry')
+    path('del_entry/<int:entry_id>/', views.del_entry, name='del_entry'),
+    # path for deleting entry
+    path('del_topic/<int:topic_id>/', views.del_topic, name='del_topic'),
+
 ]
 # app name and urls

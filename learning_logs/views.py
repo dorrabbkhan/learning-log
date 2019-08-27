@@ -135,4 +135,21 @@ def del_entry(request, entry_id):
     else:
         raise Http404
     # if user owns the topic, then delete the entry
+    # and redirect, else raise 404 error
+
+@login_required
+def del_topic(request, topic_id):
+    """
+    Delete an entry
+    """
+
+    topic = Topic.objects.get(id=topic_id)
+    # obtain topic
+
+    if topic.owner == request.user:
+        Topic.objects.filter(id=topic_id).delete()
+        return redirect('learning_logs:topics')
+    else:
+        raise Http404
+    # if user owns the topic, then delete the entry
     # and redirect, else raist 404 error
