@@ -130,7 +130,7 @@ def del_entry(request, entry_id):
     # obtain entry and topic
 
     if topic.owner == request.user:
-        Entry.objects.filter(id=entry_id).delete()
+        Entry.objects.get(id=entry_id).delete()
         return redirect('learning_logs:topic', topic_id=topic.id)
     else:
         raise Http404
@@ -147,7 +147,7 @@ def del_topic(request, topic_id):
     # obtain topic
 
     if topic.owner == request.user:
-        Topic.objects.filter(id=topic_id).delete()
+        Topic.objects.get(id=topic_id).delete()
         return redirect('learning_logs:topics')
     else:
         raise Http404
