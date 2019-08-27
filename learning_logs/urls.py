@@ -19,5 +19,6 @@ urlpatterns = [
     # path for adding new entry
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
     # path for editing entry
+    path('del_entry/<int:entry_id>/', views.del_entry, name='del_entry')
 ]
 # app name and urls

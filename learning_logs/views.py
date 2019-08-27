@@ -118,3 +118,21 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+@login_required
+def del_entry(request, entry_id):
+    """
+    Delete an entry
+    """
+
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    # obtain entry and topic
+
+    if topic.owner == request.user:
+        Entry.objects.filter(id=entry_id).delete()
+        return redirect('learning_logs:topic', topic_id=topic.id)
+    else:
+        raise Http404
+    # if user owns the topic, then delete the entry
+    # and redirect, else raist 404 error
