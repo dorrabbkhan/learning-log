@@ -170,3 +170,21 @@ def confirm_del_topic(request, topic_id):
         raise Http404
     # if user owns the topic, then delete the topic
     # and redirect, else raist 404 error
+
+@login_required
+def confirm_del_entry(request, entry_id):
+    """
+    Confirm to delete a entry
+    """
+
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    # obtain entry
+
+    if topic.owner == request.user:
+        context={'entry_id': entry_id, 'topic_id': topic.id}
+        return render(request, 'learning_logs/confirm_del_entry.html', context)
+    else:
+        raise Http404
+    # if user owns the topic, then delete the topic
+    # and redirect, else raist 404 error
