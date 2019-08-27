@@ -1,0 +1,19 @@
+{% extends 'learning_logs/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h3>
+        Are you sure you want to delete this topic?
+    </h3>
+{% endblock page_header %}
+
+{% block content %}
+{% buttons %}
+<a class="btn btn-danger btn-lg" href="{% url 'learning_logs:del_topic' topic_id %}" role="button">
+    Delete
+</a>
+<a class="btn btn-default btn-lg" href="{% url 'learning_logs:topics' %}" role="button">
+    Cancel
+</a>
+{% endbuttons %}
+{% endblock content %}

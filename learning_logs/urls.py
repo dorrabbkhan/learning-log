@@ -22,6 +22,8 @@ urlpatterns = [
     path('del_entry/<int:entry_id>/', views.del_entry, name='del_entry'),
     # path for deleting entry
     path('del_topic/<int:topic_id>/', views.del_topic, name='del_topic'),
-
+    # path for deleting topics
+    path('confirm_topic_del/<int:topic_id>/', views.confirm_del_topic, name='confirm_del_topic'),
+    # path for confirming deleting topics
 ]
 # app name and urls

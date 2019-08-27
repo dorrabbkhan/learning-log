@@ -140,7 +140,7 @@ def del_entry(request, entry_id):
 @login_required
 def del_topic(request, topic_id):
     """
-    Delete an entry
+    Delete a topic
     """
 
     topic = Topic.objects.get(id=topic_id)
@@ -151,5 +151,22 @@ def del_topic(request, topic_id):
         return redirect('learning_logs:topics')
     else:
         raise Http404
-    # if user owns the topic, then delete the entry
+    # if user owns the topic, then delete the topic
+    # and redirect, else raist 404 error
+
+@login_required
+def confirm_del_topic(request, topic_id):
+    """
+    Confirm to delete a topic
+    """
+
+    topic = Topic.objects.get(id=topic_id)
+    # obtain topic
+
+    if topic.owner == request.user:
+        context={'topic_id': topic_id}
+        return render(request, 'learning_logs/confirm_del_topic.html', context)
+    else:
+        raise Http404
+    # if user owns the topic, then delete the topic
     # and redirect, else raist 404 error
