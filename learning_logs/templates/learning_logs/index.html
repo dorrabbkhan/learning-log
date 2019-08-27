@@ -1,5 +1,10 @@
 {% extends 'learning_logs/base.html' %}
 
-{% block content %}
-    <p>Learning Log helps keep track of what you're learning!</p>
-{% endblock content %}
+{% block page_header %}
+    <div class="jumbotron">
+        <h1 class="display-3">Organize how you learn.</h1>
+        <p class="lead">Learning Log helps you keep track of what you learn. You can organize your learning into different topics, and those topics can have their own multiple entries. Just start learning a topic, and whenever you learn something new about it, make an entry for it in your Learning Log!</p>
+        <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+        role="button">Register</a>
+    </div>
+z {% endblock page_header %}
