@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 # Create your views here.
 
@@ -11,29 +13,36 @@ def index(request):
 
     return render(request, 'learning_logs/index.html')
 
+@login_required
 def topics(request):
     """
     Topics page
     """
 
-    topics = Topic.objects.order_by('date_added')
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     # define topics and context for the page
 
     return render(request, 'learning_logs/topics.html', context)
 
+@login_required
 def topic(request, topic_id):
     """
     Individual topic page
     """
 
     topic = Topic.objects.get(id=topic_id)
+    if topic.owner != request.user:
+        raise Http404
+    # make sure topic's owner is the one who requested it
+
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     # define topic, entries and context for webpage
 
     return render(request, 'learning_logs/topic.html', context)
 
+@login_required
 def new_topic(request):
     """
     Add new topic
@@ -56,6 +65,7 @@ def new_topic(request):
 
     return render(request, 'learning_logs/new_topic.html', context)
 
+@login_required
 def new_entry(request, topic_id):
     """
     Create new entry
@@ -79,6 +89,7 @@ def new_entry(request, topic_id):
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
 
+@login_required
 def edit_entry(request, entry_id):
     """
     Edit an entry
@@ -87,6 +98,10 @@ def edit_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
     # obtain entry and topic
+
+    if topic.owner != request.user:
+        raise Http404
+    # make sure entry's owner is the one who requested it
 
     if request.method != 'POST':
         form = EntryForm(instance=entry)
